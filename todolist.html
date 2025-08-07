@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <head>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+
+</head>
+
+  <title>To-Do List</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(120deg, #000000, #1a1a1a);
+      color: gold;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px;
+    }
+
+    #input {
+      padding: 12px;
+      width: 250px;
+      font-size: 16px;
+      color: gold;
+      background-color: #1a1a1a;
+      border: 2px solid gold;
+      border-radius: 8px;
+      outline: none;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 12px 18px;
+      margin-left: 10px;
+      background-color: gold;
+      color: black;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #ffcc00;
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 30px;
+      width: 350px;
+    }
+
+    li {
+      background-color: #1a1a1a;
+      color: gold;
+      padding: 15px 20px;
+      border: 2px solid gold;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.1), 0 0 30px rgba(255, 215, 0, 0.05);
+      transition: transform 0.4s ease, opacity 0.4s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    li.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    li button {
+      background-color: transparent;
+      color: gold;
+      border: 1px solid gold;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      box-shadow: none;
+    }
+
+    li button:hover {
+      background-color: gold;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Input + Add Button -->
+  <div>
+    <input id="input" placeholder="Enter a task">
+    <button onclick="Add()">
+  <i class="fa-solid fa-check" style="color: black; margin-right: 5px;"></i> Add
+</button>
+
+  </div>
+
+  <!-- Task List -->
+  <ul id="list-container">
+    <!-- Example item -->
+     <li>
+  My Task 
+  <button onclick="markDone(event)">
+    <i class="fa-solid fa-check" style="color: gold;"></i>
+  </button>
+  <button onclick="deleteItem(event)">Delete</button>
+</li>
+
+  </ul>
+
+  <script>
+    const ul = document.getElementById("list-container");
+    const input = document.getElementById("input");
+
+    // Add item to the list
+    function Add() {
+      if (input.value.trim() === "") return;
+
+      const listitem = document.createElement("li");
+        listitem.innerHTML = "<i class='fa-solid fa-check' style='color: gold; margin-right: 10px;'></i>" 
+                   + input.value 
+                   + " <button onclick='deleteItem(event)'>Delete</button>";
+
+      ul.appendChild(listitem);
+
+      // Animation class
+      setTimeout(() => {
+        listitem.classList.add("show");
+      }, 10);
+
+      input.value = ""; // Clear input
+    }
+
+    // Delete item from the list
+    function deleteItem(event) {
+      event.target.parentElement.remove();
+    }
+
+    // Add item on Enter key press
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        Add();
+      }
+    });
+  </script>
+
+</body>
+</html>
